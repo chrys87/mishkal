@@ -22,7 +22,7 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6127
+TCP_PORT = 6123
 BUFFER_SIZE = 1024
 
 def getTask(conn):
