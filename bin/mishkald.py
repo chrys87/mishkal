@@ -26,14 +26,13 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6123
+TCP_PORT = 6121
 BUFFER_SIZE = 1024
 
 def getTask(conn):
 #  "Grab command-line arguments"
     options ={ "suggestion" : False, 
     "ignore" : False,
-    "compare" : False,
     "disableSyntax" : False,
     "disableSemantic" : False,
     "disableStatistic" : False,
@@ -70,7 +69,6 @@ def start():
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
         ignore = options['ignore']
-        compare = options['compare']
         progress = options['progress']
         enable_syn_train = options['train']
             
@@ -111,10 +109,7 @@ def start():
         LettersError = 0
         WLMIncorrect = 0
         percent = 0
-        if compare:
-            #dispaly stats for the current line
-            print "id\tfully Correct\tStrip Correct\tfully WER\tStrip WER\tLER\tTotal\tline Fully correct\tline Strip correct\tLine"
-            
+
         while line:
             if not line.startswith('#'):
                 line = line.strip()
@@ -123,45 +118,7 @@ def start():
                 if strip_tashkeel:
                     result = araby.strip_tashkeel(line)
                 else:    #vocalize line by line
-                    if not compare:
-                        result = vocalizer.tashkeel(line)                    
-                    if compare:
-                        inputVocalizedLine = line
-                        inputlist = vocalizer.analyzer.tokenize(inputVocalizedLine)
-                        inputUnvocalizedLine = araby.strip_tashkeel(line)
-                        vocalized_dict = vocalizer.tashkeel_ouput_html_suggest(inputUnvocalizedLine)
-
-
-                        #stemmer=tashaphyne.stemming.ArabicLightStemmer()
-                        #~texts = vocalizer.analyzer.split_into_phrases(inputVocalizedLine)
-                        #~inputlist =[]
-                        #~for txt in texts:
-                            #~inputlist += vocalizer.analyzer.text_tokenize(txt)
-                        outputlist = [x.get("chosen",'') for x in vocalized_dict]
-                        result = u" ".join(outputlist)
-                        outputlistsemi = [x.get("semi",'') for x in vocalized_dict]
-                        total += len(inputlist)
-                        lineTotal = len(inputlist)
-                        if len(inputlist) != len(outputlist):
-                            print "lists haven't the same length"
-                            print len(inputlist), len(outputlist)
-                            print u"#".join(inputlist).encode('utf8')
-                            print u"#".join(outputlist).encode('utf8')
-                        else:
-                            for inword, outword, outsemiword in zip(inputlist, outputlist, outputlistsemi):
-                                simi = araby.vocalized_similarity(inword, outword)
-                                if simi<0:
-                                    LettersError += -simi
-                                    incorrect    += 1
-                                    # evaluation without last haraka
-                                    simi2 = araby.vocalized_similarity(inword, outsemiword)
-                                    if simi2<0: 
-                                        WLMIncorrect     += 1
-                                        lineWLMIncorrect += 1                                
-                                else:
-                                    correct += 1
-                                    lineCorrect  += 1
-                        
+                    result = vocalizer.tashkeel(line)                    
 
                 # print result.encode('utf8')
                 counter += 1
