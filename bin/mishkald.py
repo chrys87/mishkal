@@ -33,7 +33,6 @@ def getTask(conn):
 #  "Grab command-line arguments"
     options ={ "suggestion" : False, 
     "ignore" : False,
-    "limit" : False, 
     "compare" : False,
     "disableSyntax" : False,
     "disableSemantic" : False,
@@ -73,7 +72,6 @@ def start():
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
         ignore = options['ignore']
-        limit  = options['limit']
         compare = options['compare']
         progress = options['progress']
         enable_syn_train = options['train']
@@ -86,8 +84,7 @@ def start():
 
 
         counter = 1
-        if not limit : 
-            limit = 100000000
+
         if not strip_tashkeel: 
             vocalizer = ArabicVocalizer.TashkeelClass()
             if nocache : 
@@ -105,10 +102,6 @@ def start():
                 vocalizer.enable_syn_train()
                 #print "mishkal-console, vocalizer.anasynt.syntax_train_enabled", vocalizer.anasynt.syntax_train_enabled
 
-        #vocalizer.disableShowCollocationMark()
-        #print "show delimiter", vocalizer.collo.showDelimiter
-        #nolimit = True
-        nolimit = False
 
         if len(lines)>0:
             line = lines[0]
@@ -124,7 +117,7 @@ def start():
             #dispaly stats for the current line
             print "id\tfully Correct\tStrip Correct\tfully WER\tStrip WER\tLER\tTotal\tline Fully correct\tline Strip correct\tLine"
             
-        while line and (nolimit or counter <= limit):
+        while line:
             if not line.startswith('#'):
                 line = line.strip()
                 lineCorrect = 0
@@ -179,9 +172,7 @@ def start():
              
                 #~ print result.strip('\n').encode('utf8'),
                 if text:
-                    #conn.send(result.encode('utf-8'))
                     print result.strip('\n').encode('utf8')
-                    #conn.close()
 
             if counter<len(lines):
                 line = lines[counter]
