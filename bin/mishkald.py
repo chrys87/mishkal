@@ -15,7 +15,11 @@ sys.path.append(os.path.join(base_dir, '../support/'))
 sys.path.append(os.path.join(base_dir, '../mishkal'))
 sys.path.append(os.path.join(base_dir, '../')) # used for core
 
-                
+import tashkeel.tashkeel as ArabicVocalizer
+
+import core.adaat 
+import pyarabic.araby as araby
+
 scriptname = os.path.splitext(base_dir)[0]
 
 scriptversion = '0.1'
@@ -52,7 +56,6 @@ def getTask(conn):
     #if text: print text.encode('utf8')
     return (options)
 
-import tashkeel.tashkeel as ArabicVocalizer
 
 def start():
     acceptSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -80,8 +83,7 @@ def start():
 
         lines = text.split('\n')
         # all things are well, import library
-        import core.adaat 
-        import pyarabic.araby as araby
+
 
         counter = 1
         if not limit : 
