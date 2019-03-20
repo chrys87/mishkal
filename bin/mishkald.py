@@ -25,14 +25,13 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6225
+TCP_PORT = 6226
 BUFFER_SIZE = 1024
 
 def getTask(conn):
 #  "Grab command-line arguments"
-    options ={ "disableSemantic" : False,
-    "strip_tashkeel" : False,
-    "text" : None,
+    options ={
+        "text" : None,
     }
 
     data = conn.recv(BUFFER_SIZE)
@@ -56,8 +55,6 @@ def start():
         conn, addr = acceptSock.accept()
         options = getTask(conn)
         text     = options['text']
-        strip_tashkeel  = options['strip_tashkeel']
-        disableSemantic = options['disableSemantic']
             
         if not text:
             continue
@@ -65,10 +62,6 @@ def start():
         lines = text.split('\n')
 
         counter = 1
-
-        if not strip_tashkeel: 
-            if disableSemantic:
-                vocalizer.disable_semantic_analysis()
 
         if len(lines)>0:
             line = lines[0]
@@ -86,10 +79,7 @@ def start():
                 line = line.strip()
                 lineCorrect = 0
                 lineWLMIncorrect = 0
-                if strip_tashkeel:
-                    result = araby.strip_tashkeel(line)
-                else:    #vocalize line by line
-                    result = vocalizer.tashkeel(line)                    
+                result = vocalizer.tashkeel(line)                    
 
                 # print result.encode('utf8')
                 counter += 1
