@@ -25,13 +25,12 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6221
+TCP_PORT = 6222
 BUFFER_SIZE = 1024
 
 def getTask(conn):
 #  "Grab command-line arguments"
     options ={ "suggestion" : False, 
-    "ignore" : False,
     "disableSyntax" : False,
     "disableSemantic" : False,
     "disableStatistic" : False,
@@ -64,11 +63,9 @@ def start():
         options = getTask(conn)
         text     = options['text']
         strip_tashkeel  = options['strip_tashkeel']
-        nocache         = options['nocache']
         disableSyntax   = options['disableSyntax']
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
-        ignore = options['ignore']
         progress = options['progress']
         enable_syn_train = options['train']
             
@@ -80,11 +77,6 @@ def start():
         counter = 1
 
         if not strip_tashkeel: 
-            if nocache : 
-                vocalizer.disable_cache()
-                #print "nocache"
-            if ignore : 
-                vocalizer.disable_last_mark()
             if disableSemantic:
                 vocalizer.disable_semantic_analysis()
             if disableSyntax:
