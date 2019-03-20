@@ -35,7 +35,6 @@ def getTask(conn):
     "disableSemantic" : False,
     "disableStatistic" : False,
     "strip_tashkeel" : False,
-    "progress" : False,  
     "train" : False,  
     "nocache" : False,
     "text" : None,
@@ -66,7 +65,6 @@ def start():
         disableSyntax   = options['disableSyntax']
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
-        progress = options['progress']
         enable_syn_train = options['train']
             
         if not text:
