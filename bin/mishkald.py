@@ -25,7 +25,7 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6226
+TCP_PORT = 6227
 BUFFER_SIZE = 1024
 
 def getTask(conn):
@@ -50,8 +50,8 @@ def start():
     acceptSock.bind((TCP_IP, TCP_PORT))
     acceptSock.listen(1)
     vocalizer = ArabicVocalizer.TashkeelClass()
-
-    while True:
+    running = True
+    while running:
         conn, addr = acceptSock.accept()
         options = getTask(conn)
         text     = options['text']
@@ -66,19 +66,11 @@ def start():
         if len(lines)>0:
             line = lines[0]
 
-        correct = 0
-        incorrect = 0
-        total = 0
-        totLetters = 0
-        LettersError = 0
-        WLMIncorrect = 0
-        percent = 0
 
         while line:
             if not line.startswith('#'):
                 line = line.strip()
-                lineCorrect = 0
-                lineWLMIncorrect = 0
+
                 result = vocalizer.tashkeel(line)                    
 
                 # print result.encode('utf8')
