@@ -35,7 +35,6 @@ def getTask(conn):
     "disableSemantic" : False,
     "disableStatistic" : False,
     "strip_tashkeel" : False,
-    "train" : False,  
     "nocache" : False,
     "text" : None,
     }
@@ -65,7 +64,6 @@ def start():
         disableSyntax   = options['disableSyntax']
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
-        enable_syn_train = options['train']
             
         if not text:
             continue
@@ -81,10 +79,6 @@ def start():
                 vocalizer.disable_syntaxic_analysis()
             if disableStat:
                 vocalizer.disable_stat_tashkeel()
-            if enable_syn_train:
-                vocalizer.enable_syn_train()
-                #print "mishkal-console, vocalizer.anasynt.syntax_train_enabled", vocalizer.anasynt.syntax_train_enabled
-
 
         if len(lines)>0:
             line = lines[0]
