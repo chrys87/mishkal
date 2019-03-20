@@ -43,7 +43,7 @@ def getTask(conn):
     return (options)
 
 
-def start():
+def main():
     acceptSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     acceptSock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     acceptSock.bind((TCP_IP, TCP_PORT))
@@ -81,5 +81,19 @@ def start():
                 print result.strip('\n').encode('utf8')
         finally:
             conn.close()
+
 if __name__ == '__main__':
-    start()
+    try:
+        print 'start as daemon'
+        pid = "/var/run/mishkal.pid"
+        from daemonize import Daemonize
+        daemon = Daemonize(app="mishkald", pid=pid, action=main)
+        daemon.start()
+    except Exception as e:
+        print 'daemonize failed start in foreground'
+        print e
+        main()
+        
+
+
+
