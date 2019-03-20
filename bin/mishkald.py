@@ -16,7 +16,6 @@ sys.path.append(os.path.join(base_dir, '../mishkal'))
 sys.path.append(os.path.join(base_dir, '../')) # used for core
 
 import tashkeel.tashkeel as ArabicVocalizer
-
 import core.adaat 
 import pyarabic.araby as araby
 
@@ -26,7 +25,7 @@ scriptversion = '0.1'
 AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6121
+TCP_PORT = 6221
 BUFFER_SIZE = 1024
 
 def getTask(conn):
@@ -58,6 +57,7 @@ def start():
     acceptSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     acceptSock.bind((TCP_IP, TCP_PORT))
     acceptSock.listen(1)
+    vocalizer = ArabicVocalizer.TashkeelClass()
 
     while True:
         conn, addr = acceptSock.accept()
@@ -76,13 +76,10 @@ def start():
             continue
 
         lines = text.split('\n')
-        # all things are well, import library
-
 
         counter = 1
 
         if not strip_tashkeel: 
-            vocalizer = ArabicVocalizer.TashkeelClass()
             if nocache : 
                 vocalizer.disable_cache()
                 #print "nocache"
