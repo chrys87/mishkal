@@ -112,7 +112,8 @@ class TashkeelClass:
         # unknown vocalizer for unrecognized words
         self.unknown_vocalizer = unknown_tashkeel.UnknownTashkeel()
         
-
+    def set_log_level(self, level):
+        self.logger.setLevel(level)
     
     def set_limit(self, limit):
         """

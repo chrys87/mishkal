@@ -49,11 +49,12 @@ def start():
     acceptSock.bind((TCP_IP, TCP_PORT))
     acceptSock.listen(1)
     vocalizer = ArabicVocalizer.TashkeelClass()
+    vocalizer.set_log_level(50) # critical
     running = True
     while running:
         conn, addr = acceptSock.accept()
         options = getTask(conn)
-        text     = options['text']
+        text = options['text']
             
         if not text:
             continue
