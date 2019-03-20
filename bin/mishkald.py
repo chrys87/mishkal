@@ -85,12 +85,12 @@ def main():
 if __name__ == '__main__':
     try:
         print 'start as daemon'
-        pid = "/var/run/mishkal.pid"
+        pid = "/run/mishkal.pid"
         from daemonize import Daemonize
         daemon = Daemonize(app="mishkald", pid=pid, action=main)
         daemon.start()
     except Exception as e:
-        print 'daemonize failed start in foreground'
+        print 'starting daemon failed, start in foreground'
         print e
         main()
         
