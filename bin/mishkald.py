@@ -38,7 +38,6 @@ def getTask(conn):
     "disableSemantic" : False,
     "disableStatistic" : False,
     "strip_tashkeel" : False,
-    "reducedTashkeel" : False,  
     "progress" : False,  
     "train" : False,  
     "nocache" : False,
@@ -67,7 +66,6 @@ def start():
         text     = options['text']
         strip_tashkeel  = options['strip_tashkeel']
         nocache         = options['nocache']
-        reducedTashkeel = options['reducedTashkeel']
         disableSyntax   = options['disableSyntax']
         disableSemantic = options['disableSemantic']
         disableStat     = options['disableStatistic']
@@ -164,9 +162,7 @@ def start():
                                     correct += 1
                                     lineCorrect  += 1
                         
-                #compare resultLine and vocalizedLine
-                if reducedTashkeel:
-                    result = araby.reduceTashkeel(result)
+
                 # print result.encode('utf8')
                 counter += 1
              
