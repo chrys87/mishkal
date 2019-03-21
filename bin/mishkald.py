@@ -23,7 +23,7 @@ AuthorName = "chrys"
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = 6123
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 256
 DEBUG = False
 
 def getTask(conn):
