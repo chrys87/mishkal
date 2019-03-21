@@ -48,7 +48,7 @@ def main():
     acceptSock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     acceptSock.bind((TCP_IP, TCP_PORT))
     acceptSock.listen(1)
-    vocalizer = ArabicVocalizer.TashkeelClass()
+    vocalizer = ArabicVocalizer.TashkeelClass('/tmp/mishkal_cache/')
     vocalizer.set_log_level(50) # critical
     running = True
     while running:
