@@ -2,8 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import socket, os, sys
-import os
-import sys
+
 base_dir = os.path.dirname(os.path.realpath(__file__))
 #~ sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), '../support/'))
 #~ sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), '../mishkal'))
