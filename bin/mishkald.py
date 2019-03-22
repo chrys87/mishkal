@@ -31,7 +31,7 @@ def getTask(conn):
     }
     try:
         data = conn.recv(BUFFER_SIZE)
-        options["text"] = data.decode('utf8')
+        options["text"] = data.decode('utf8').replace('\00', '')
     except:
         conn.close()
         return (options)
