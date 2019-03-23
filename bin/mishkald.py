@@ -75,7 +75,7 @@ def main():
                 if text:
                     print lineResult.strip('\n').encode('utf8')
         try:
-            conn.send(result.encode('utf-8'))
+            conn.send(result.encode('utf-8') + '\00')
             if DEBUG:
                 print result.strip('\n').encode('utf8')
         finally:
