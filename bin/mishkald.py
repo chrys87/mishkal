@@ -15,8 +15,6 @@ import tashkeel.tashkeel as ArabicVocalizer
 import core.adaat 
 import pyarabic.araby as araby
 
-scriptname = os.path.splitext(base_dir)[0]
-
 scriptversion = '0.3'
 AuthorName = "chrys"
 
@@ -134,7 +132,3 @@ if __name__ == '__main__':
         print 'starting daemon failed, start in foreground'
         print e
         main()
-        
-
-
-
