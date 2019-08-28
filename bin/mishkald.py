@@ -20,9 +20,7 @@ scriptname = os.path.splitext(base_dir)[0]
 scriptversion = '0.3'
 AuthorName = "chrys"
 
-
-
-class mishkald:
+class mishkald():
     def __init__(self):
         self.ip = '127.0.0.1'
         self.running = True       
@@ -45,6 +43,10 @@ class mishkald:
             pass
     def isSocketsEmpty(self):
         return self.sockets == []
+    def isRunning(self):
+        return self.running
+    def setRunning(self, running):
+        self.running = running
     def getData(self, conn):
         options ={
             "text" : None,
@@ -72,7 +74,7 @@ class mishkald:
         self.addSocket(self.acceptSock)
         self.vocalizer = ArabicVocalizer.TashkeelClass('/tmp/mishkal_cache/')
         self.vocalizer.set_log_level(50) # critical
-        while self.running:
+        while self.isRunning():
             ready = select.select(sockets, [], [], -1)
             # only accept connection and skip
             if self.acceptSock in ready:        
@@ -114,7 +116,7 @@ class mishkald:
                 finally:
                     self.closeSock(conn)
                 if self.isSocketsEmpty():
-                    return
+                    self.setRunning(false)
 
 def main():
     app = mishkald()
