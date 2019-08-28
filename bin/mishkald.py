@@ -120,7 +120,7 @@ class mishkald():
 
 def main():
     app = mishkald()
-    app.proceed()
+    app.run()
     del app
 
 if __name__ == '__main__':
@@ -129,7 +129,7 @@ if __name__ == '__main__':
         pid = "/run/mishkal.pid"
         from daemonize import Daemonize
         daemon = Daemonize(app="mishkald", pid=pid, action=main)
-        daemon.run()
+        daemon.start()
     except Exception as e:
         print 'starting daemon failed, start in foreground'
         print e
