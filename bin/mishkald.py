@@ -23,7 +23,7 @@ class mishkald():
         self.ip = '127.0.0.1'
         self.running = True       
         self.port = 6123
-        self.buffer = 65536
+        self.bufferSize = 65536
         self.debug = False        
         self.sockets = []
         self.acceptSock = None
@@ -50,9 +50,9 @@ class mishkald():
             "text" : None,
         }
         try:
-            data = conn.recv(self.buffer)
+            data = conn.recv(self.bufferSize)
             while  '\00' not in data:
-                data += conn.recv(self.buffer)
+                data += conn.recv(self.bufferSize)
             options["text"] = data.decode('utf8').replace('\00', '')
         except:
             closeSock(conn)
