@@ -21,13 +21,15 @@ AuthorName = "chrys"
 class mishkald():
     def __init__(self):
         self.ip = '127.0.0.1'
-        self.running = True       
+        self.running = True
         self.port = 6123
         self.bufferSize = 65536
-        self.debug = False        
+        self.debug = False
         self.sockets = []
         self.acceptSock = None
         self.vocalizer = None
+    def getSockets(self):
+        return self.sockets
     def addSocket(self, conn):
         self.sockets.append(conn)
     def closeSock(self, conn):
@@ -55,7 +57,7 @@ class mishkald():
                 data += conn.recv(self.bufferSize)
             options["text"] = data.decode('utf8').replace('\00', '')
         except:
-            closeSock(conn)
+            self.closeSock(conn)
             return (options)
 
         if not data:
@@ -73,9 +75,9 @@ class mishkald():
         self.vocalizer = ArabicVocalizer.TashkeelClass('/tmp/mishkal_cache/')
         self.vocalizer.set_log_level(50) # critical
         while self.isRunning():
-            ready = select.select(sockets, [], [], -1)
+            ready = select.select(self.getSockets(), [], [], 0)
             # only accept connection and skip
-            if self.acceptSock in ready:        
+            if self.acceptSock in ready:
                 conn, addr = self.acceptSock.accept()
                 self.acceptSock(conn)
                 ready.remove(self.acceptSock)
@@ -100,7 +102,7 @@ class mishkald():
                     if line.startswith('#'):
                         continue
 
-                    lineResult = self.vocalizer.tashkeel(line)                    
+                    lineResult = self.vocalizer.tashkeel(line)
                     result += ' ' + lineResult
 
                     if self.isDebug():
