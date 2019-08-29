@@ -53,8 +53,14 @@ class mishkald():
         }
         try:
             data = conn.recv(self.bufferSize)
-            while  '\00' not in data:
+            ready, _, _ = select.select([conn], [], [], 0)
+
+            while ready != []:
                 data += conn.recv(self.bufferSize)
+                if '\00' not in data:
+                    break
+                ready, _, _ = select.select([conn], [], [], 0)
+
             options["text"] = data.decode('utf8').replace('\00', '')
         except:
             self.closeSock(conn)
@@ -75,11 +81,12 @@ class mishkald():
         self.vocalizer = ArabicVocalizer.TashkeelClass('/tmp/mishkal_cache/')
         self.vocalizer.set_log_level(50) # critical
         while self.isRunning():
-            ready = select.select(self.getSockets(), [], [])
+            print self.getSockets()
+            ready, _, _ = select.select(self.getSockets(), [], [])
             # only accept connection and skip
             if self.acceptSock in ready:
                 conn, addr = self.acceptSock.accept()
-                self.acceptSock(conn)
+                self.addSocket(conn)
                 ready.remove(self.acceptSock)
             # for better reading skip if there are no more requests
             if ready == []:
