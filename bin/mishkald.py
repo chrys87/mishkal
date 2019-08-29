@@ -81,7 +81,6 @@ class mishkald():
         self.vocalizer = ArabicVocalizer.TashkeelClass('/tmp/mishkal_cache/')
         self.vocalizer.set_log_level(50) # critical
         while self.isRunning():
-            print self.getSockets()
             ready, _, _ = select.select(self.getSockets(), [], [])
             # only accept connection and skip
             if self.acceptSock in ready:
